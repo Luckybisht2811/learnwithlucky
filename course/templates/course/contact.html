@@ -1,0 +1,94 @@
+{% extends 'course/base.html' %}
+
+{% block title %}Contact Us | LearnWithLucky{% endblock %}
+
+{% block maincontent %}
+
+<section class="bg-gray-50 py-16">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Heading -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">Contact Us</h2>
+            <p class="text-gray-500 mt-3">Have any questions? We'd love to hear from you.</p>
+        </div>
+
+        <!-- Success / Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-6 text-center px-4 py-3 rounded-lg 
+                    {% if message.tags == 'success' %} bg-green-100 text-green-700 
+                    {% else %} bg-red-100 text-red-700 {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Grid -->
+        <div class="grid md:grid-cols-2 gap-10">
+
+            <!-- LEFT SIDE (INFO) -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700">📍 Address</h3>
+                    <p class="text-gray-500">India, Rajasthan</p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700">📧 Email</h3>
+                    <!-- ✅ Clickable mailto link -->
+                    <a href="mailto:lalitsinghbisht282002@gmail.com"
+                       class="text-blue-500 hover:underline">
+                        lalitsinghbisht282002@gmail.com
+                    </a>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700">📞 Phone</h3>
+                    <p class="text-gray-500">+91 7014375946</p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700">🕒 Working Hours</h3>
+                    <p class="text-gray-500">Mon - Sat : 10 AM - 6 PM</p>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (FORM) -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Name</label>
+                        <input type="text" name="name"
+                            class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email"
+                            class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Message</label>
+                        <textarea name="message" rows="4"
+                            class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Write your message..." required></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

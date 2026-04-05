@@ -1,0 +1,142 @@
+{% extends 'course/base.html' %}
+{% load static %}
+{% block title %}Notes | LearnWithLucky{% endblock title %}
+
+{% block maincontent %}
+
+<!-- Language image map (hardcoded, always looks nice) -->
+{% with python_img="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" c_img="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" cpp_img="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" java_img="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" %}
+
+<section class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Page Header -->
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold">Study Notes</h2>
+            <p class="text-gray-500 mt-2">Click on a language to view its notes</p>
+        </div>
+
+        {% if grouped_notes %}
+
+            <!-- Language Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                {% for language, notes_list in grouped_notes.items %}
+
+                <button onclick="showNotes('{{ language }}')"
+                    id="btn-{{ language }}"
+                    class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center gap-3 hover:shadow-xl transition cursor-pointer border-2 border-transparent hover:border-blue-400">
+
+                    <!-- Hardcoded language image based on language name -->
+                    {% if language == 'Python' %}
+                        <img src="{% static 'course/images/p.webp' %}" alt="Python" class="w-20 h-20 object-contain">
+                    {% elif language == 'C' %}
+                        <img src="{% static 'course/images/clang.webp' %}" alt="C" class="w-20 h-20 object-contain">
+                    {% elif language == 'Django' %}
+                        <img src="{% static 'course/images/dj1.webp' %}" alt="Django" class="w-20 h-20 object-contain">
+                    {% elif language == 'Java' %}
+                        <img src="{% static 'course/images/java.webp' %}" alt="Java" class="w-20 h-20 object-contain">
+                    {% else %}
+                        <div class="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center text-3xl">📁</div>
+                    {% endif %}
+
+                    <h3 class="text-lg font-semibold">{{ language }}</h3>
+                    <p class="text-gray-400 text-sm">
+                        {{ notes_list|length }} note{% if notes_list|length != 1 %}s{% endif %}
+                    </p>
+
+                </button>
+
+                {% endfor %}
+            </div>
+
+            <!-- Notes Sections (shown on click) -->
+            {% for language, notes_list in grouped_notes.items %}
+            <div id="notes-{{ language }}" class="hidden mb-12">
+
+                <!-- Section Header -->
+                <div class="flex items-center justify-between bg-white rounded-2xl shadow px-6 py-4 mb-6">
+                    <div class="flex items-center gap-4">
+
+                        {% if language == 'Python' %}
+                            <img src="{% static 'course/images/p.webp' %}" alt="Python" class="w-12 h-12 object-contain">
+                        {% elif language == 'C' %}
+                            <img src="{% static 'course/images/clang.webp' %}" alt="C" class="w-12 h-12 object-contain">
+                        {% elif language == 'Django' %}
+                            <img src="{% static 'course/images/dj1.webp' %}" alt="Django" class="w-12 h-12 object-contain">
+                        {% elif language == 'Java' %}
+                            <img src="{% static 'course/images/java.webp' %}" alt="Java" class="w-12 h-12 object-contain">
+                        {% endif %}
+
+                        <div>
+                            <h3 class="text-xl font-semibold">{{ language }}</h3>
+                            <p class="text-gray-400 text-sm">
+                                {{ notes_list|length }} note{% if notes_list|length != 1 %}s{% endif %} available
+                            </p>
+                        </div>
+                    </div>
+
+                    <button onclick="showNotes(null)"
+                        class="text-sm text-gray-400 hover:text-red-400 transition font-medium">
+                        ✕ Close
+                    </button>
+                </div>
+
+                <!-- Notes Grid -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    {% for note in notes_list %}
+                    <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-3">
+
+                        <h4 class="text-lg font-semibold">{{ note.title }}</h4>
+                        <p class="text-gray-500 text-sm flex-1">{{ note.description }}</p>
+
+                        <div class="flex gap-3 mt-2">
+                            <a href="{{ note.file.url }}" target="_blank"
+                               class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+                                View
+                            </a>
+                            <a href="{{ note.file.url }}" download
+                               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+                                Download
+                            </a>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <div class="text-center text-gray-400 py-20">
+                <p class="text-xl">No notes available yet.</p>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endwith %}
+
+<script>
+    function showNotes(language) {
+        document.querySelectorAll('[id^="notes-"]').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('[id^="btn-"]').forEach(el => {
+            el.classList.remove('border-blue-400');
+            el.classList.add('border-transparent');
+        });
+
+        if (language) {
+            const section = document.getElementById('notes-' + language);
+            const btn = document.getElementById('btn-' + language);
+            if (section) section.classList.remove('hidden');
+            if (btn) {
+                btn.classList.add('border-blue-400');
+                btn.classList.remove('border-transparent');
+            }
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
+
+{% endblock %}

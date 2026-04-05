@@ -1,0 +1,258 @@
+{% extends 'course/base.html' %}
+{% load static %} 
+
+{% block title %}Home | LearnWithLucky{% endblock title %}
+
+{% block hero %}
+<section class="relative h-screen flex items-center justify-center text-center text-white">
+
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+        <img src="{% static 'course/images/lmsimg.avif' %}" 
+             class="w-full h-full object-cover blur-sm scale-105">
+        
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-3xl px-6">
+
+        <!-- Top Button -->
+        <button class="bg-blue-600 px-6 py-2 rounded-r-full shadow-lg hover:bg-blue-700 transition">
+            Learn coding the right way →
+        </button>
+
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-5xl font-bold mt-6 leading-tight">
+            Welcome to <span class="text-blue-400">LearnWithLucky</span>
+        </h1>
+
+        <!-- Typing Animation -->
+        <h2 class="text-xl md:text-2xl mt-4">
+            Learn 
+            <span id="typing-text" class="text-blue-400 font-semibold"></span> |
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-6 text-gray-200">
+            Confused about which course to take? We've got you covered! 
+            Browse courses and discover the best option for you. It's free! 
+            LearnWithLucky helps you learn coding faster.
+        </p>
+
+        <!-- Buttons -->
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+            <a href="{% url 'courses' %}" 
+               class="bg-blue-600 px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+                Explore Courses
+            </a>
+
+            <a href="#" 
+               class="border border-white px-6 py-3 rounded-lg hover:bg-white hover:text-black transition">
+                Read Articles
+            </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-10 grid grid-cols-3 gap-6 text-center">
+            <div>
+                <h3 class="text-2xl font-bold text-blue-400">100+</h3>
+                <p class="text-gray-300 text-sm">Courses</p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold text-blue-400">500K+</h3>
+                <p class="text-gray-300 text-sm">Students</p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold text-blue-400">5.0 ⭐</h3>
+                <p class="text-gray-300 text-sm">Rating</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+{% endblock hero %}
+
+{% block maincontent %}
+
+<!-- SECTION 1 -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Code Smarter with Real-World Practice
+        </h2>
+
+        <p class="mt-4 text-gray-500 max-w-3xl mx-auto">
+            At LearnWithLucky, you don't just learn code, you engage in practical exercises that reflect real-world scenarios.
+            From beginner-friendly lessons to advanced courses trusted by professionals, we prepare you for real-world projects.
+        </p>
+
+        <!-- 3 BOXES -->
+        <div class="mt-12 grid md:grid-cols-3 gap-8">
+
+            <!-- BOX 1 -->
+            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition">
+                <div class="bg-blue-50 h-48 flex items-center justify-center">
+                    <img src="{% static 'course/images/web1.webp' %}"
+                        class="w-46 h-45 object-contain">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Web Development</h3>
+                    <p class="text-gray-500 mt-2 text-sm leading-relaxed">
+                        Learn HTML, CSS, JavaScript and modern frameworks to build responsive websites and web apps.
+                    </p>
+                    <span class="inline-block mt-4 text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full">Beginner friendly</span>
+                </div>
+            </div>
+
+            <!-- BOX 2 -->
+            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition">
+                <div class="bg-emerald-50 h-48 flex items-center justify-center">
+                    <img src="{% static 'course/images/d2.jpg' %}"
+                        class="w-46 h-46 object-contain">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Data Science & AI</h3>
+                    <p class="text-gray-500 mt-2 text-sm leading-relaxed">
+                        Master Python, data analysis, machine learning and AI with hands-on real-world projects.
+                    </p>
+                    <span class="inline-block mt-4 text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">Trending</span>
+                </div>
+            </div>
+
+            <!-- BOX 3 -->
+            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition">
+                <div class="bg-orange-50 h-48 flex items-center justify-center">
+                    <img src="{% static 'course/images/d3.webp' %}"
+                        class="w-46 h-45 object-contain">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Data Structures & Algorithms</h3>
+                    <p class="text-gray-500 mt-2 text-sm leading-relaxed">
+                        Learn DSA and crack interviews at top companies like Google and Microsoft.
+                    </p>
+                    <span class="inline-block mt-4 text-xs bg-orange-50 text-orange-700 px-3 py-1 rounded-full">Interview prep</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SECTION 2 -->
+<section class="py-16 bg-gray-50 text-center">
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Empowering Aspiring Developers to Build Their Future in Tech!
+        </h2>
+
+        <!-- STATS -->
+        <div class="mt-12 grid md:grid-cols-4 gap-8">
+
+            <div>
+                <h3 class="text-3xl font-bold text-blue-600">6 months</h3>
+                <p class="text-gray-500">Students land job (avg)</p>
+            </div>
+
+            <div>
+                <h3 class="text-3xl font-bold text-blue-600">7,000,000+</h3>
+                <p class="text-gray-500">Students trained</p>
+            </div>
+
+            <div>
+                <h3 class="text-3xl font-bold text-blue-600">1 Billion+</h3>
+                <p class="text-gray-500">YouTube views</p>
+            </div>
+
+            <div>
+                <h3 class="text-3xl font-bold text-blue-600">Top Companies</h3>
+                <p class="text-gray-500">Hiring our students</p>
+            </div>
+
+        </div>
+
+        <!-- COMPANIES -->
+        <div class="mt-10 flex flex-wrap justify-center gap-4 text-gray-600 text-sm">
+            <span>Amazon</span>
+            <span>Google</span>
+            <span>Microsoft</span>
+            <span>Goldman</span>
+            <span>PayPal</span>
+            <span>Samsung</span>
+            <span>IBM</span>
+            <span>Deloitte</span>
+            <span>+ many more</span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SECTION 3 -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Master Coding with Our Core Offerings
+        </h2>
+
+        <div class="mt-12 grid md:grid-cols-3 gap-8 text-left">
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Beginner-Friendly</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Step-by-step courses designed for absolute beginners.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Advanced Concepts</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Deep dive into advanced topics and frameworks.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Real-World Projects</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Build projects and gain hands-on experience.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Affordable Pricing</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Premium courses at student-friendly prices.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Comprehensive Resources</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Templates, docs, and code snippets included.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                <h3 class="font-semibold text-lg">Industry Insights</h3>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Stay updated with latest tech trends.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
