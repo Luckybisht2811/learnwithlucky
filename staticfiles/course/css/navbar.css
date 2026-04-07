@@ -1,0 +1,132 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEARCH WRAPPER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.search-wrapper {
+    position: relative;
+}
+
+.nav-search {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 0.875rem;
+    font-family: 'Poppins', sans-serif;
+    width: 200px;
+    transition: width 0.3s ease, border-color 0.2s;
+    background: transparent;
+}
+
+.nav-search:focus {
+    width: 260px;
+    border-color: #5b8dee;
+}
+
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEARCH RESULTS DROPDOWN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.search-results-box {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 260px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 99999;
+    overflow: hidden;
+    display: none;
+}
+
+.search-result-item {
+    display: block;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: #f0f5ff;
+}
+
+.search-result-item mark {
+    background: #ffe066;
+    color: #333;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+.search-empty {
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    font-family: 'Poppins', sans-serif;
+    color: #999;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   START LEARNING BUTTON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.start-learning-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    background: #5b8dee;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+}
+
+.start-learning-btn:hover {
+    background: #3a6fd8;
+    transform: translateY(-1px);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DARK MODE — SEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+body.dark-mode .nav-search {
+    border-color: #444;
+    color: #eee;
+}
+
+body.dark-mode .nav-search:focus {
+    border-color: #5b8dee;
+}
+
+body.dark-mode .search-results-box {
+    background: #1e1e2e;
+    border-color: #333;
+}
+
+body.dark-mode .search-result-item {
+    color: #ddd;
+    border-bottom-color: #2a2a3a;
+}
+
+body.dark-mode .search-result-item:hover {
+    background: #2a2a40;
+}
+
+body.dark-mode .search-empty {
+    color: #777;
+}

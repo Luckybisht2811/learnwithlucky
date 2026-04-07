@@ -8,6 +8,7 @@ from django.contrib import messages
 import json
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache  # ← add this
 
 def home(req):
     return render(req, 'course/home.html', {
@@ -17,10 +18,13 @@ def home(req):
 
 # Course
 def courses(req):
-    all_courses = Course.objects.all()
-    print("COURSES COUNT:", all_courses.count())  # add this debug line
-    print("COURSES JSON:", json.dumps([{"title": c.title} for c in all_courses]))  # add this
-    
+    # check cache first
+    all_courses = cache.get('all_courses')
+
+    if not all_courses:
+        all_courses = list(Course.objects.all())
+        cache.set('all_courses', all_courses, timeout=300)  # cache for 5 minutes
+
     courses_json = json.dumps([
         {
             "title": c.title,
@@ -36,7 +40,14 @@ def courses(req):
 
 @login_required(login_url='/register/')
 def course_detail(request, course_id):
-    course = Course.objects.get(id=course_id)
+    # cache each course separately by id
+    cache_key = f'course_{course_id}'
+    course = cache.get(cache_key)
+
+    if not course:
+        course = Course.objects.get(id=course_id)
+        cache.set(cache_key, course, timeout=300)
+
     return render(request, 'course/course_detail.html', {
         'course': course,
         'courses_json': '[]',
@@ -45,7 +56,13 @@ def course_detail(request, course_id):
 
 # Notes
 def notes(req):
-    all_notes = Note.objects.all()
+    # check cache first
+    all_notes = cache.get('all_notes')
+
+    if not all_notes:
+        all_notes = list(Note.objects.all())
+        cache.set('all_notes', all_notes, timeout=300)  # cache for 5 minutes
+
     grouped_notes = defaultdict(list)
     for note in all_notes:
         grouped_notes[note.language].append(note)
@@ -53,7 +70,7 @@ def notes(req):
     notes_json = json.dumps([
         {
             "title": n.title,
-            "url": f"/notes/{n.id}/"  # adjust to match your URL pattern
+            "url": f"/notes/{n.id}/"
         }
         for n in all_notes
     ])
@@ -64,7 +81,7 @@ def notes(req):
     })
 
 
-# COntact
+# Contact
 def contact(req):
     if req.method == 'POST':
         name    = req.POST.get('name')
@@ -86,8 +103,8 @@ Message :
             send_mail(
                 subject,
                 body,
-                email,                                  # From (sender's email)
-                ['lalitsinghbisht282002@gmail.com'],    # To (your email)
+                email,
+                ['lalitsinghbisht282002@gmail.com'],
                 fail_silently=False,
             )
             messages.success(req, '✅ Your message has been sent successfully! I will get back to you soon.')
@@ -98,7 +115,6 @@ Message :
         'courses_json': '[]',
         'notes_json': '[]',
     })
-
 
 
 # Login Section
@@ -147,7 +163,7 @@ def register(request):
     return render(request, 'course/register.html')
 
 
-# Search:
+# Search
 def search(request):
     query = request.GET.get('q', '')
     results = []

@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 LANGUAGE_CHOICES = [
     ('Python', 'Python'),
@@ -10,8 +11,8 @@ LANGUAGE_CHOICES = [
 class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    video = models.FileField(upload_to='course_videos/')
-    thumbnail = models.ImageField(upload_to='course_thumbnails/', blank=True, null=True)
+    video = CloudinaryField('video', resource_type='video')
+    thumbnail = CloudinaryField('image', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -21,7 +22,7 @@ class Note(models.Model):
     language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, default='Python')
     title = models.CharField(max_length=200)
     description = models.TextField()
-    file = models.FileField(upload_to='notes/')
+    file = CloudinaryField('file', resource_type='raw')
 
     def __str__(self):
         return self.title

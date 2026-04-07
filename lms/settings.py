@@ -2,10 +2,22 @@ from pathlib import Path
 import os
 from decouple import config
 import dj_database_url
+import cloudinary
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ✅ Now reads from .env file
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -26,6 +38,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'course',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 SITE_ID = 1
@@ -102,6 +116,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -117,3 +133,14 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')        # ✅ fixed
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # ✅ fixed
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

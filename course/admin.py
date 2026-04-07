@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.core.cache import cache
 from .models import Course, Note
 
 
@@ -21,8 +22,17 @@ class CourseAdmin(admin.ModelAdmin):
         }),
     )
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        cache.delete('all_courses')          # clear courses list cache
+        cache.delete(f'course_{obj.pk}')     # clear individual course cache
+
+    def delete_model(self, request, obj):
+        super().delete_model(request, obj)
+        cache.delete('all_courses')          # clear cache on delete too
+        cache.delete(f'course_{obj.pk}')
+
     def thumbnail_preview(self, obj):
-        # obj.pk is None when adding a new course
         if obj.pk and obj.thumbnail:
             return format_html(
                 '<img src="{}" style="width:200px; height:120px; object-fit:cover; border-radius:8px;">',
@@ -53,6 +63,14 @@ class NoteAdmin(admin.ModelAdmin):
             'fields': ('file',)
         }),
     )
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        cache.delete('all_notes')            # clear notes list cache
+
+    def delete_model(self, request, obj):
+        super().delete_model(request, obj)
+        cache.delete('all_notes')            # clear cache on delete too
 
     def description_short(self, obj):
         return obj.description[:60] + '...' if len(obj.description) > 60 else obj.description
